@@ -10,6 +10,12 @@
     <p>Welcome to <%= title %></p>
     <% if(!error){%>
     <p>There are <%= numberOfTicket %> tickets available</p>
+    <ul>
+      <%# this is a comment: loop over each ticket to grab id and subject in
+      ticket %> <% for(const ticket of list){%>
+      <li>ID:<%= ticket.id %>, Subject:<%= ticket.subject %></li>
+      <%}%>
+    </ul>
     <%}else{ %>
 
     <span> <%=error %> </span>
