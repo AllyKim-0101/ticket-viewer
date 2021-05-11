@@ -1,13 +1,14 @@
 const fetch = require("node-fetch");
-var express = require("express");
-var router = express.Router();
+const express = require("express");
+const zendeskAPI = require("../lib/zendeskAPI")
+const router = express.Router();
 
 const username = process.env.USERNAME;
 const password = process.env.PASSWORD;
 
-let url = `https://${username}:${password}@allykim.zendesk.com/api/v2/tickets.json`;
 /* GET home page. */
 router.get("/", function (req, res, next) {
+  const url = zendeskAPI.buildURL(username, password)
   fetch(url)
     .then((data) => {
       return data.json();
