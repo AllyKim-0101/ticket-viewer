@@ -20,7 +20,9 @@
       </li>
       <%}%>
     </ul>
-    <%}else{ %>
+    <% if (nextPage){%>
+    <a href="?page=<%= nextPage %>">next</a>
+    <%}%> <%}else{ %>
 
     <span> <%=error %> </span>
     <%}%>
