@@ -1,4 +1,3 @@
-const fetch = require("node-fetch");
 const express = require("express");
 const zendeskAPI = require("../lib/zendeskAPI");
 const router = express.Router();
@@ -8,23 +7,27 @@ const password = process.env.PASSWORD;
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  const url = zendeskAPI.buildURL(username, password);
   let pageNumber = parseInt(req.query.page) || 1;
-  fetch(`${url}tickets.json?page=${pageNumber}&per_page=25`)
-    .then((data) => {
-      return data.json();
-    })
+  zendeskAPI
+    .fetchTickets(username, password, pageNumber)
     .then((parsedData) => {
-      res.render("index", {
-        title: "Zendesk Ticket Viewer",
-        numberOfTicket: parsedData.count,
-        list: parsedData.tickets,
-        nextPage: parsedData.tickets.length < 25 ? undefined : pageNumber + 1,
-        // diplay error message if parsedData contains error otherwise dont ,which means error in js will be undefined(=no error)
-        error: parsedData.error
-          ? `Opps, We are so sorry :( Something went wrong: ${parsedData.error.title} (${parsedData.error.message})`
-          : undefined,
-      });
+      if (!parsedData.error) {
+        res.render("index", {
+          title: "Zendesk Ticket Viewer",
+          numberOfTicket: parsedData.count,
+          list: parsedData.tickets,
+          nextPage: parsedData.tickets.length < 25 ? undefined : pageNumber + 1,
+          error: undefined,
+        });
+      } else {
+        console.log(parsedData);
+        res.render("index", {
+          title: "Zendesk Ticket Viewer",
+          error: `Opps, We are so sorry :( Something went wrong: ${JSON.stringify(
+            parsedData.error
+          )}`,
+        });
+      }
     })
     //if we dont receive parsed data then disply an error to the user
     .catch((error) => {
