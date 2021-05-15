@@ -1,6 +1,6 @@
 const fetch = require("node-fetch");
 const express = require("express");
-const zendeskAPI = require("../lib/zendeskAPI")
+const zendeskAPI = require("../lib/zendeskAPI");
 const router = express.Router();
 
 const username = process.env.USERNAME;
@@ -9,7 +9,7 @@ const password = process.env.PASSWORD;
 /* GET home page. */
 router.get("/", function (req, res, next) {
   const url = zendeskAPI.buildURL(username, password)
-  fetch(url)
+  fetch(`${url}tickets.json`)
     .then((data) => {
       return data.json();
     })
