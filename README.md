@@ -6,7 +6,7 @@ The express based web app shows the list of available zendesk tickets using the 
 
 This project uses node v14.15.0 and yarn v1.22.4
 
-Run the following command to install dependencies
+Run the following command inside of this directory to install dependencies
 
     yarn install
 
