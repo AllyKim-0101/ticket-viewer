@@ -17,6 +17,7 @@ router.get("/", function (req, res, next) {
           numberOfTicket: parsedData.count,
           list: parsedData.tickets,
           nextPage: parsedData.tickets.length < 25 ? undefined : pageNumber + 1,
+          previousPage: pageNumber > 1 ? pageNumber - 1 : undefined,
           error: undefined,
         });
       } else {

@@ -4,12 +4,23 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+
     <title>Ticket Details</title>
   </head>
   <body>
-    <h1>Ticket details</h1>
+    <h1>Ticket Details</h1>
     <p>ID: <%= ticketId %></p>
-    <p>subject: <%= ticketDetails.subject%></p>
+    <p>Subject: <%= ticketDetails.subject%></p>
     <p>Description: <%= ticketDetails.description%></p>
+    <p>Status: <%= ticketDetails.status%></p>
+    <p>
+      Created date & Time: <%= new
+      Date(ticketDetails.created_at).toLocaleString() %>
+    </p>
+    <p>
+      Updated date & Time: <%= new
+      Date(ticketDetails.updated_at).toLocaleString()%>
+    </p>
   </body>
 </html>

@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title><%= title %></title>
   </head>
 
   <body>
@@ -10,7 +13,7 @@
     <p>Welcome to <%= title %></p>
     <% if(!error){%>
     <p>
-      There are <span id="numberOfTicket"><%= numberOfTicket %></span>tickets
+      There are <span id="numberOfTicket"><%= numberOfTicket %></span> tickets
       available
     </p>
     <ul>
@@ -23,9 +26,15 @@
       </li>
       <%}%>
     </ul>
-    <% if (nextPage){%>
-    <a href="?page=<%= nextPage %>">next</a>
-    <%}%> <%}else{ %>
+    <div id="pagination">
+      <% if(previousPage){%>
+      <a href="?page=<%= previousPage %>">Previous</a>
+      <%}%> <% if (nextPage){%>
+      <a href="?page=<%= nextPage %>">Next</a>
+      <%}%>
+    </div>
+
+    <%}else{ %>
 
     <span> <%=error %> </span>
     <%}%>
