@@ -1,13 +1,14 @@
 const app = require("./app");
 const zendeskAPI = require("./lib/zendeskAPI");
 const request = require("supertest");
-const { response } = require("express");
 const parser = new DOMParser();
 
 jest.mock("./lib/zendeskAPI", () => {
   const fakeTickets = require("./faketickets.json");
+  const fakeTicket = fakeTickets.tickets.find((ticket) => ticket.id == 2);
   return {
     fetchTickets: jest.fn().mockResolvedValue(fakeTickets),
+    fetchDetails: jest.fn().mockResolvedValue({ ticket: fakeTicket }),
   };
 });
 
@@ -30,8 +31,35 @@ describe("homepage", () => {
   });
 });
 
-describe("ticket details", () => {
-  test.todo("returns 200 status code");
-  test.todo("shows the ticket subject");
-  test.todo("shows the ticket description");
+describe("shows ticket details", () => {
+  test("returns 200 status code", async () => {
+    const response = await request(app).get("/ticketDetails/2");
+    expect(response.statusCode).toEqual(200);
+  });
+
+  test("shows the ticket subject", async () => {
+    const response = await request(app).get("/ticketDetails/2");
+    const document = parser.parseFromString(response.text, "text/html");
+    expect(document.querySelector("#subject").innerHTML).toEqual(
+      "Subject: I need help"
+    );
+  });
+
+  test("shows the ticket description", async () => {
+    const response = await request(app).get("/ticketDetails/2");
+    const document = parser.parseFromString(response.text, "text/html");
+    expect(document.querySelector("#description").innerHTML).toEqual(
+      "Description: Hello,\nSomething dramatic happened and I could really use your help.\nThanks in advance,\nCustomer\n"
+    );
+  });
+  test("shows the ticket Id", async () => {
+    const response = await request(app).get("/ticketDetails/2");
+    const document = parser.parseFromString(response.text, "text/html");
+    expect(document.querySelector("#id").innerHTML).toEqual("ID: 2");
+  });
+  test("shows the status of ticket", async () => {
+    const response = await request(app).get("/ticketDetails/2");
+    const document = parser.parseFromString(response.text, "text/html");
+    expect(document.querySelector("#status").innerHTML).toEqual("Status: open");
+  });
 });

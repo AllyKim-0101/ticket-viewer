@@ -8,9 +8,8 @@ const password = process.env.PASSWORD;
 
 router.get("/:ticketId", function (req, res) {
   let id = req.params.ticketId;
-  const url = zendeskAPI.buildURL(username, password);
-  fetch(`${url}tickets/${id}.json`)
-    .then((data) => data.json())
+  zendeskAPI
+    .fetchDetails(username, password, id)
     .then((parsedData) => {
       res.render("ticketDetails", {
         ticketId: id,

@@ -10,10 +10,10 @@
   </head>
   <body>
     <h1>Ticket Details</h1>
-    <p>ID: <%= ticketId %></p>
-    <p>Subject: <%= ticketDetails.subject%></p>
-    <p>Description: <%= ticketDetails.description%></p>
-    <p>Status: <%= ticketDetails.status%></p>
+    <p id="id">ID: <%= ticketId %></p>
+    <p id="subject">Subject: <%= ticketDetails.subject%></p>
+    <p id="description">Description: <%= ticketDetails.description%></p>
+    <p id="status">Status: <%= ticketDetails.status%></p>
     <p>
       Created date & Time: <%= new
       Date(ticketDetails.created_at).toLocaleString() %>
